@@ -90,3 +90,8 @@ pnpm i -D @babel/plugin-transform-react-jsx
 [React 17中的新JSX增强功能](https://www.jianshu.com/p/ea33391817c7)
 [manual-babel-setup](https://legacy.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html#manual-babel-setup)
 
+
+### 路由
+pnpm i -S react-router-dom
+createBrowserRouter： 刷新后就报错了，目前还没找到开发环境的解决办法，开发环境需要配合 historyApiFallback 属性
+createHashRouter：好用
