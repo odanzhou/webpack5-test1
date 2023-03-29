@@ -54,3 +54,38 @@ poorsetSandbox(code, ctx)
 ```
 
 能避免与ctx变量的强耦合，但还是能够通过window或未定义变量名的方式来突破ctx的模拟限制
+
+### 没那么简陋的沙箱（with + Proxy）
+
+Proxy 中的 get 和 set 方法只能拦截已存在于代理对象中的属性，对于代理对象中不存在的属性这两个钩子是无感知的（对这个保持怀疑）(在 with 下是), 因此可以使用 Proxy.has() 来拦截 with 代码块中的任意变量的访问，并设置一个白名单，在白名单内的变量可以走正常的作用域链的访问方式，不在白名单内的变量会继续判断是否存在沙箱自行维护的上下文对象中，存在则正常访问，不存在则直接报错
+
+```typescript
+var a = new Proxy({x: 1}, {
+  get(...args) {
+    console.log('get', args)
+    return Reflect.get(...args)
+  },
+  set(...args) {
+    console.log('set', args)
+    return Reflect.set(...args)
+  },
+})
+a.x 
+a.x = 2
+// a.x 的获取或设置会触发
+a.y
+a.y = 3
+// a.y 的获取或设置也会触发
+// 对【 get 和 set 方法只能拦截已存在于代理对象中的属性】保持怀疑
+with(a) {
+  console.log(x)
+}
+// 能正常触发
+
+with(a) {
+  console.log(y)
+}
+// 报错，提示 y  为定义
+// 【get 和 set 方法只能拦截已存在于代理对象中的属性】应该指的是在with里面的情况
+```
+
