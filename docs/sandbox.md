@@ -146,3 +146,129 @@ littlePoorSandbox(code, ctxProxy)
 
 ### 基于 iframe 的沙箱
 [iframe](https://wangdoc.com/html/iframe)
+
+```typescript
+class SandboxGlobalProxy {
+  constructor(sharedState) {
+    // 创建一个 iframe 对象，取出其中的原生浏览器对象作为沙箱的全局对象
+    const iframe = document.createElement('iframe', {url: 'about:blank'})
+    document.body.appendChild(iframe)
+    const sandGlobal = iframe.contentWindow // 沙箱运行时的全局对象（iframe重的window）
+    // return sandGlobal // 发挥它才行
+    return new Proxy(sandGlobal, {
+      has: (target, prop) => { // has 可以拦截 with 代码块中的任意属性的访问
+        if(sharedState.includes(prop)) { // 如果属性存在于共享的全局状态中，则让其沿着原型链在外层查找
+            return false
+        }
+        if(!target.hasOwnProperty(prop)) {
+            throw new Error(`Invalid expression - ${prop}! You can not do that!`)
+        }
+        return true
+      }
+    })
+  }
+}
+
+// 用 with 包裹的函数，globalObj 是能够保证传入的值和with只能够的一致
+function withedYourCode(code) {
+  code = `with(globalObj){ ${code} }`
+  return new Function('globalObj', code)
+}
+
+function maybeAvailableSandbox(code, ctx) {
+  withedYourCode(code).call(ctx, ctx)
+}
+
+const code_1 = `
+  debugger
+  console.log(history == window.history) // fasle
+  window.abc = 'sanbox'
+  Object.prototype.toString = () => {
+    console.log('Traped!')
+  }
+  console.log(window.abc) // sandbox
+`
+const sharedGlobal_1 = ['history'] // 希望雨外部执行环境共享的全局对象
+const globalProxy_1 = new SandboxGlobalProxy(sharedGlobal_1)
+
+maybeAvailableSandbox(code_1, globalProxy_1)
+window.abc // undefined
+Object.prototype.toString() // [object Object] 并没有打印 Traped
+// 上面代码运行会报错，直接返回 sandGlobal 而不是其代理对象可行
+``` 
+[proxy-on-window](https://stackoverflow.com/questions/45437583/proxy-on-window)
+> the window property is read-only, i.e. it is non-configurable and has no set accessor, it can't be replaced with a proxy.
+应该不是上面这个原因造成的
+[使用ES6代理和node.js的非法调用错误(Illegal invocation error using ES6 Proxy and node.js)](https://www.656463.com/wenda/syES6dlhnodejsdffdycw_501)
+> 通过代理丢失，给你IllegalInvocation错误，因为当你调用它时函数没有上下文
+[this 问题](https://es6.ruanyifeng.com/#docs/proxy#this-%E9%97%AE%E9%A2%98)
+
+[使用 ES6 Proxy 代理的 this 问题记录](https://juejin.cn/post/6844903730987401230)
+```typescript
+class SandboxGlobalProxy {
+    constructor(sharedState) {
+        // 创建一个 iframe 对象，取出其中的原生浏览器对象作为沙箱的全局对象
+        const iframe = document.createElement('iframe', {url: 'about:blank'})
+        document.body.appendChild(iframe)
+        const sandGlobal = iframe.contentWindow // 沙箱运行时的全局对象（iframe重的window）
+        return new Proxy(sandGlobal, {
+            has: (target, prop) => { // has 可以拦截 with 代码块中的任意属性的访问
+                if(sharedState.includes(prop)) { // 如果属性存在于共享的全局状态中，则让其沿着原型链在外层查找
+                    return false
+                }
+                if(!target.hasOwnProperty(prop)) {
+                    throw new Error(`Invalid expression - ${prop}! You can not do that!`)
+                }
+                return true
+            },
+            get(target, key, receiver) {
+              debugger
+              if(!!target[key] && !!target[key].bind) {
+                return target[key].bind(target)
+              } else {
+                return target[key]
+              }
+            },
+            set(target, key, value, receiver) {
+              debugger
+              if(key in target) {
+                return target[key] = value
+              } else {
+                Reflect(target, key, value, receiver)
+              }
+                return true
+            },
+        })
+        
+    }
+}
+
+// 用 with 包裹的函数，globalObj 是能够保证传入的值和with只能够的一致
+function withedYourCode(code) {
+  code = `with(globalObj){ ${code} }`
+  return new Function('globalObj', code)
+}
+
+function maybeAvailableSandbox(code, ctx) {
+  withedYourCode(code).call(ctx, ctx)
+}
+
+const code_1 = `
+
+  debugger
+  console.log(history == window.history) // fasle
+  window.abc = 'sanbox'
+  Object.prototype.toString = () => {
+    console.log('Traped!')
+  }
+  console.log(window.abc) // sandbox
+`
+const sharedGlobal_1 = ['history'] // 希望雨外部执行环境共享的全局对象
+const globalProxy_1 = new SandboxGlobalProxy(sharedGlobal_1)
+
+maybeAvailableSandbox(code_1, globalProxy_1)
+window.abc // undefined
+Object.prototype.toString() // [object Object] 并没有打印 Traped
+// 能解决部分问题，但还是报错
+```
+解决方式应该是不直接代理 window，而是间接代理
