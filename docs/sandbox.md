@@ -1,4 +1,5 @@
 # 沙箱
+沙箱的核心功能：隔离代码，防止危害就是污染、篡改全局 window 状态
 [with 语句](https://wangdoc.com/javascript/types/object#with-%E8%AF%AD%E5%8F%A5)
 [https://www.qy.cn/jszx/detail/15204.html](https://www.qy.cn/jszx/detail/15204.html)
 
@@ -142,3 +143,6 @@ function littlePoorSandbox(code, ctx) {
 
 littlePoorSandbox(code, ctxProxy)
 ```
+
+### 基于 iframe 的沙箱
+[iframe](https://wangdoc.com/html/iframe)
