@@ -89,3 +89,56 @@ with(a) {
 // 【get 和 set 方法只能拦截已存在于代理对象中的属性】应该指的是在with里面的情况
 ```
 
+[Function 构造函数](https://wangdoc.com/javascript/types/function)
+```typescript
+var add = new Function(
+  'x',
+  'y',
+  'return x + y'
+);
+// 上面代码中，Function构造函数接受三个参数，除了最后一个参数是add函数的“函数体”，其他参数都是add函数的参数
+```
+
+```typescript
+// 用 with 包裹的函数，globalObj 是能够保证传入的值和with只能够的一致
+function withedYourCode(code) {
+  code = `with(globalObj){ ${code} }`
+  return new Function('globalObj', code)
+}
+// 可访问全局作用域的白名单列表
+const access_white_list = ['Math', 'Date']
+
+// 待执行程序源代码
+const code = `
+  Math.random()
+  location.href = 'xxx'
+  func(foo)
+`
+
+// 执行上下文
+const ctx = {
+  func: variable => {
+    console.log(variable)
+  },
+  foo: 'foo'
+}
+
+// 执行上下文对象的代理对象
+const ctxProxy = new Proxy(ctx, {
+  has: (target, prop) => { // has 可以拦截 with 代码块中任意属性的访问
+    if(access_white_list.includes(prop)) { // 白名单中的属性
+      return target.hasOwnProperty(prop)
+    }
+    if(!target.hasOwnProperty(prop)) {
+      throw new Error(`Invalid expression - ${prop}! You can not do that`)
+    }
+    return true
+  }
+})
+
+function littlePoorSandbox(code, ctx) {
+  withedYourCode(code).call(ctx, ctx) // 将 this 指向手动构造的全局代理对象中
+}
+
+littlePoorSandbox(code, ctxProxy)
+```
