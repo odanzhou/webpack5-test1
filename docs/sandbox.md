@@ -206,41 +206,40 @@ Object.prototype.toString() // [object Object] 并没有打印 Traped
 [使用 ES6 Proxy 代理的 this 问题记录](https://juejin.cn/post/6844903730987401230)
 ```typescript
 class SandboxGlobalProxy {
-    constructor(sharedState) {
-        // 创建一个 iframe 对象，取出其中的原生浏览器对象作为沙箱的全局对象
-        const iframe = document.createElement('iframe', {url: 'about:blank'})
-        document.body.appendChild(iframe)
-        const sandGlobal = iframe.contentWindow // 沙箱运行时的全局对象（iframe重的window）
-        return new Proxy(sandGlobal, {
-            has: (target, prop) => { // has 可以拦截 with 代码块中的任意属性的访问
-                if(sharedState.includes(prop)) { // 如果属性存在于共享的全局状态中，则让其沿着原型链在外层查找
-                    return false
-                }
-                if(!target.hasOwnProperty(prop)) {
-                    throw new Error(`Invalid expression - ${prop}! You can not do that!`)
-                }
-                return true
-            },
-            get(target, key, receiver) {
-              debugger
-              if(!!target[key] && !!target[key].bind) {
-                return target[key].bind(target)
-              } else {
-                return target[key]
-              }
-            },
-            set(target, key, value, receiver) {
-              debugger
-              if(key in target) {
-                return target[key] = value
-              } else {
-                Reflect(target, key, value, receiver)
-              }
-                return true
-            },
-        })
-        
-    }
+  constructor(sharedState) {
+    // 创建一个 iframe 对象，取出其中的原生浏览器对象作为沙箱的全局对象
+    const iframe = document.createElement('iframe', {url: 'about:blank'})
+    document.body.appendChild(iframe)
+    const sandGlobal = iframe.contentWindow // 沙箱运行时的全局对象（iframe重的window）
+    return new Proxy(sandGlobal, {
+      has: (target, prop) => { // has 可以拦截 with 代码块中的任意属性的访问
+        if(sharedState.includes(prop)) { // 如果属性存在于共享的全局状态中，则让其沿着原型链在外层查找
+          return false
+        }
+        if(!target.hasOwnProperty(prop)) {
+          throw new Error(`Invalid expression - ${prop}! You can not do that!`)
+        }
+        return true
+      },
+      get(target, key, receiver) {
+        debugger
+        if(!!target[key] && !!target[key].bind) {
+          return target[key].bind(target)
+        } else {
+          return target[key]
+        }
+      },
+      set(target, key, value, receiver) {
+        debugger
+        if(key in target) {
+          return target[key] = value
+        } else {
+          Reflect(target, key, value, receiver)
+        }
+        return true
+      },
+    })
+  }
 }
 
 // 用 with 包裹的函数，globalObj 是能够保证传入的值和with只能够的一致
