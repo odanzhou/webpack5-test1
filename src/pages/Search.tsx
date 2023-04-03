@@ -1,6 +1,9 @@
+import { useEffect } from "react"
 
 const Search = () => {
-  
+  useEffect(() => {
+    
+  }, [])
   return (
     <div>
       search page

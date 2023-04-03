@@ -18,3 +18,6 @@ plugins = [
   })
 ]
 ```
+### 文档
+[webpack5模块联邦(Module Federation)](https://zhuanlan.zhihu.com/p/485148715)
+[Module Federation](https://webpack.docschina.org/concepts/module-federation/)
