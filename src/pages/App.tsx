@@ -1,5 +1,6 @@
 import { Outlet, Link } from 'react-router-dom'
 import TestComponent from '@/components/testComponent'
+import Search from './Search'
 
 type AppType = {
   title?: React.ReactNode,
@@ -20,6 +21,7 @@ const App = (props: AppType) => {
     <div>
       <Outlet />
     </div>
+    <Search />
   </div>)
 }
 
