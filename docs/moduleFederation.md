@@ -54,3 +54,27 @@ const React =  awaitimport('libs/react');
 
 ```
 对于某些依赖来说 external （比如 react 和 react-dom）可能更合适，但也有一些自动化的方式可以系统地解决此问题，使用此方案的同时并既然使用老的写法
+
+### 监听外部模块
+[webpack 监听外部文件变更](https://www.keisei.top/watch-external-files-webpack-plugin/)
+
+```typescript
+class TestPlugin {
+  constructor (files) {
+    this.count = 0
+    this.watchFiles = Array.isArray(files) ? files : []
+  }
+  apply (compiler) {
+    console.log('>>>>>>>>>>>applyapplyapplyapply>>>>>>>>>>>>')
+    compiler.hooks.compilation.tap('MyPlugin', (compilation) => {
+      this.count += 1
+      console.log('argsxxx>>>>>>>>>>>>', this.count, this.watchFiles, compilation.fileDependencies)
+      if(compilation.fileDependencies && this.watchFiles.length) {
+        compilation.fileDependencies.addAll(this.watchFiles) // 监听的文件
+        console.log('yyyyxxx', compilation.fileDependencies.size)
+      }
+    })
+  }
+}
+```
+但没解决我想要解决的问题，即 webpack.config.js 变化后要重新有效果，发现这个只能是重启webpack才行，而不是仅仅触发文件变化
