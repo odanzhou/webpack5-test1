@@ -58,6 +58,7 @@ const React =  awaitimport('libs/react');
 ### 监听外部模块
 [webpack 监听外部文件变更](https://www.keisei.top/watch-external-files-webpack-plugin/)
 [如何使用Webpack插件在编译后修改和重新解析模块？](https://www.php1.cn/detail/Webpack_ChaJian__b167e22a.html)
+[webpack-dev-server启动的前端项目使用nodemon监听自动重启](https://blog.51cto.com/u_15713165/5459778)
 
 ```typescript
 class TestPlugin {
