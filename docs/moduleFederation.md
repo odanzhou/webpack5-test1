@@ -57,6 +57,7 @@ const React =  awaitimport('libs/react');
 
 ### 监听外部模块
 [webpack 监听外部文件变更](https://www.keisei.top/watch-external-files-webpack-plugin/)
+[如何使用Webpack插件在编译后修改和重新解析模块？](https://www.php1.cn/detail/Webpack_ChaJian__b167e22a.html)
 
 ```typescript
 class TestPlugin {
@@ -78,3 +79,17 @@ class TestPlugin {
 }
 ```
 但没解决我想要解决的问题，即 webpack.config.js 变化后要重新有效果，发现这个只能是重启webpack才行，而不是仅仅触发文件变化
+
+#### nodemon
+好像nodemon能解决我的疑问，或者看下umi中是如何实现的
+[nodemon入门介绍](https://zhuanlan.zhihu.com/p/96720675)
+[Node 工具 | nodemon 详解](https://www.jianshu.com/p/a35dfc72c6e6)
+[利用nodemon监听配置文件并重启webpack server](https://zhuanlan.zhihu.com/p/409880360)
+[nodemon和pm2快速部署服务](https://blog.csdn.net/bobo789456123/article/details/125584876)
+[Node 工程师应当掌握的 PM2](https://baijiahao.baidu.com/s?id=1665037401501338559&wfr=spider&for=pc)
+> nodemon是一个用来监视node.js应用程序中的任何更改并自动重启服务,非常适合用在开发环境中。
+> pm2是一个进程管理工具,可以用它来管理你的node进程，并查看node进程的状态，当然也支持性能监控，
+进程守护，负载均衡等功能。
+> 总结
+> nodemon运行在开发环境，不占用进程，关闭了这个服务也就关闭了，
+> pm2是一个运行在服务端后台开发，不占用终端，但是这个启动服务后这个进程仍然存在，作用都差不多哦
