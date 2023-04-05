@@ -3,7 +3,7 @@ import { Outlet, Link } from 'react-router-dom'
 import TestComponent from '@/components/testComponent'
 import Search from './Search'
 
-const BPageInfo =  lazy(() => import('bComponent'))
+const BPageInfo =  lazy(() => import('libA/InfoPage'))
 
 console.log('BPageInfo', BPageInfo)
 
@@ -28,6 +28,10 @@ const App = (props: AppType) => {
       <Outlet />
     </div>
     <Search />
+    <div>
+      <div style={{background: 'yellow'}}>remote</div>
+      <BPageInfo />
+    </div>
   </div>)
 }
 

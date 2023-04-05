@@ -57,13 +57,14 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
+      runtime: 'my-runtime-name-xxx', // 穿件一个此名称的运行时chunk，默认为false, 具体作用待明确 TODO
       name: 'webpackAHost', // 当前应用的名称，需要唯一性
       filename: 'remoteEntry.js', // 入口文件名称，用于对外提供模块时候的入口文件名
       exposes: { // 需要导出的模块，用于提供给外部其他项目进行使用
         './search': './src/pages/Search', // '@/src/pages/Search' // 不能用@的别用方式
       },
       remotes: {
-        bComponent: 'webpackBHost@http://localhost:9100/remoteEntry.js'
+        libA: 'webpackBHost@http://localhost:9100/remoteEntry.js'
       }
     }),
     new HtmlWebpackPlugin({
