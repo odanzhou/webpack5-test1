@@ -1,11 +1,17 @@
+import { lazy } from 'react'
 import { Outlet, Link } from 'react-router-dom'
 import TestComponent from '@/components/testComponent'
 import Search from './Search'
+
+const BPageInfo =  lazy(() => import('bComponent'))
+
+console.log('BPageInfo', BPageInfo)
 
 type AppType = {
   title?: React.ReactNode,
   showError?: boolean,
 }
+
 const App = (props: AppType) => {
   const { title, showError } = props
   if(showError) {

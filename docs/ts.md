@@ -42,3 +42,7 @@
   }
 }
 ```
+
+#### typescript 全局变量声明文件和模块声明文件那些事儿
+[typescript 全局变量声明文件和模块声明文件那些事儿](http://www.javashuo.com/article/p-ahnqywaq-wu.html)
+

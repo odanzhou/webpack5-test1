@@ -31,6 +31,7 @@ module.exports = {
   output: {
     path: path.resolve(cwdPath, 'dist'),
     filename: '[name].js',
+    clean: true,
   },
   module: {
     rules: [
@@ -61,9 +62,9 @@ module.exports = {
       exposes: { // 需要导出的模块，用于提供给外部其他项目进行使用
         './search': './src/pages/Search', // '@/src/pages/Search' // 不能用@的别用方式
       },
-      // remotes: {
-      //   app1: 'app1@http://localhost:3001/remoteEntry.js'
-      // }
+      remotes: {
+        bComponent: 'webpackBHost@http://localhost:9100/remoteEntry.js'
+      }
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(cwdPath, 'public/index.html')
