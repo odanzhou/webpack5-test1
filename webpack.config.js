@@ -54,6 +54,9 @@ module.exports = {
     port: 9000,
     hot: true,
     historyApiFallback: true,
+    // https://webpack.docschina.org/configuration/dev-server/#devserverallowedhosts
+    // 当设置为 'auto' 时，此配置项总是允许 localhost、 host 和 client.webSocketURL.hostname：
+    allowedHosts: 'auto', // 'all'
   },
   plugins: [
     new ModuleFederationPlugin({
@@ -65,7 +68,7 @@ module.exports = {
       },
       remotes: {
         libA: 'webpackBHost@http://localhost:9100/remoteEntry.js'
-      }
+      },
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(cwdPath, 'public/index.html')
