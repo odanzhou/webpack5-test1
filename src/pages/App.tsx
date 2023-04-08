@@ -19,7 +19,7 @@ const App = (props: AppType) => {
   }
   return (<div>
     { title && <h1>{title}</h1>}
-    Hello React Page
+    Hello React Page in test1
     <TestComponent />
     <div>
       <Link to="about">to Aubout</Link>
