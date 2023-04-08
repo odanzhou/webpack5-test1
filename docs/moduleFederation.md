@@ -4,6 +4,9 @@
 2. [百度工程师带你了解Module Federation](https://baijiahao.baidu.com/s?id=1757137368593494033&wfr=spider&for=pc)
 3. [共享模块：ModuleFederationPlugin](https://www.cnblogs.com/zcookies/p/16131326.html)
 
+[故障排除](https://webpack.docschina.org/concepts/module-federation/#troubleshooting)
+使用share时，会报错，[Uncaught Error: Shared module is not available for eager consumption]
+
 
 ### 使用
 ```typescript
