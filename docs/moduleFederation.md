@@ -105,4 +105,5 @@ class TestPlugin {
 > pm2是一个运行在服务端后台开发，不占用终端，但是这个启动服务后这个进程仍然存在，作用都差不多哦
 
 ### 问题
-index + bootstrap 的方案 与 eager: true 同时使用会报错
+~~index + bootstrap 的方案 与 eager: true 同时使用会报错~~
+eager 的值所有需要依赖间需要保持一致
