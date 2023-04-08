@@ -3,6 +3,7 @@ const path = require('path')
 const fs = require('fs')
 const JSONC = require('jsonc-parser')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { dependencies: packageJsonDeps } = require('./package.json')
 
 const { container: { ModuleFederationPlugin } } = webpack
 
@@ -81,7 +82,7 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      runtime: 'my-runtime-name-xxx', // 穿件一个此名称的运行时chunk，默认为false, 具体作用待明确 TODO
+      // runtime: 'my-runtime-name-xxx', // 穿插一个此名称的运行时chunk，默认为false, 具体作用待明确 TODO
       name: 'webpackAHost', // 当前应用的名称，需要唯一性
       filename: 'remoteEntry.js', // 入口文件名称，用于对外提供模块时候的入口文件名
       exposes: { // 需要导出的模块，用于提供给外部其他项目进行使用
@@ -90,15 +91,19 @@ module.exports = {
       remotes: {
         libA: 'webpackBHost@http://localhost:9100/remoteEntry.js'
       },
-      shared: ['react'],
-      // shared1: {
-      //   react: {
-      //     singleton: true,
-      //   },
-      //   // 'react-dom': {
-      //   //   singleton: true
-      //   // }
-      // }
+      // 解决方案1
+      //shared: ['react'],
+      // 解决方案2
+      shared: {
+        react: {
+          // singleton: true,
+          eager: true,
+          // requiredVersion: packageJsonDeps.react,
+        },
+        // 'react-dom': {
+        //   singleton: true
+        // }
+      }
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(cwdPath, 'public/index.html')
@@ -107,5 +112,5 @@ module.exports = {
   ],
   watchOptions: {
     ignored: /node_modules/,
-  }
+  },
 }
