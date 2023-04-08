@@ -6,7 +6,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const { container: { ModuleFederationPlugin } } = webpack
 
-
 class TestPlugin {
   constructor (files) {
     this.count = 0
@@ -91,6 +90,15 @@ module.exports = {
       remotes: {
         libA: 'webpackBHost@http://localhost:9100/remoteEntry.js'
       },
+      shared: ['react'],
+      // shared1: {
+      //   react: {
+      //     singleton: true,
+      //   },
+      //   // 'react-dom': {
+      //   //   singleton: true
+      //   // }
+      // }
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(cwdPath, 'public/index.html')

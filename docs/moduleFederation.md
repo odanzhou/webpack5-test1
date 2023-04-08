@@ -25,6 +25,10 @@ plugins = [
 [调研 Federated Modules](https://mp.weixin.qq.com/s/sdIVsfmRlhDtT6DF2dmsJQ)
 [demo](https://github.com/module-federation/module-federation-examples/)
 [最详细的Module Federation的实现原理讲解](https://juejin.cn/post/7151281452716392462)
+[Module Federation 没有魔法仅仅是异步chunk](https://zhuanlan.zhihu.com/p/352936804)
+[故障排除](https://books.sangniao.com/manual/274077574/1055924632)
+[Uncaught Error: Shared module is not available for eager consumption](https://books.sangniao.com/manual/274077574/2176736653)
+
 
 #### 和 external 的区别？
 external 需要自行在 html 引入相关 script，此方案只需引一个 runtime 文件，runtime 里维护了 chunk 的映射表
