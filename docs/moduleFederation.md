@@ -6,7 +6,8 @@
 
 [故障排除](https://webpack.docschina.org/concepts/module-federation/#troubleshooting)
 使用share时，会报错，[Uncaught Error: Shared module is not available for eager consumption]
-
+[Webpack 模块联合不适用于急切的共享库](https://segmentfault.com/q/1010000043020060)
+[Webpack module federation is not working with eager shared libs](https://stackoverflow.com/questions/66123283/webpack-module-federation-is-not-working-with-eager-shared-libs/66638938#66638938)
 
 ### 使用
 ```typescript
