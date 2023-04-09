@@ -1,5 +1,6 @@
 import { lazy } from 'react'
 import { Outlet, Link } from 'react-router-dom'
+import ErrorBound from './ErrorBound'
 import TestComponent from '@/components/testComponent'
 import Search from './Search'
 
@@ -30,7 +31,9 @@ const App = (props: AppType) => {
     <Search />
     <div>
       <div style={{background: 'yellow'}}>remote</div>
-      <BPageInfo />
+      <ErrorBound>
+        <BPageInfo />
+      </ErrorBound>
     </div>
   </div>)
 }

@@ -94,17 +94,17 @@ module.exports = {
       // 解决方案1
       //shared: ['react'],
       // 解决方案2
-      shared: {
-        react: {
-          singleton: true,
-          eager: true,
-          // requiredVersion: packageJsonDeps.react,
-        },
-        'react-dom': {
-          singleton: true,
-          eager: true,
-        }
-      }
+      // shared: {
+      //   react: {
+      //     singleton: true,
+      //     eager: true,
+      //     // requiredVersion: packageJsonDeps.react,
+      //   },
+      //   'react-dom': {
+      //     singleton: true,
+      //     eager: true,
+      //   }
+      // }
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(cwdPath, 'public/index.html')

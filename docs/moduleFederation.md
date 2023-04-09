@@ -102,8 +102,14 @@ class TestPlugin {
 进程守护，负载均衡等功能。
 > 总结
 > nodemon运行在开发环境，不占用进程，关闭了这个服务也就关闭了，
-> pm2是一个运行在服务端后台开发，不占用终端，但是这个启动服务后这个进程仍然存在，作用都差不多哦
+> pm2是一个运行在服务端后台开发，不占用终端，但是这个启动服务后这个进程仍然存在，作用都差不多
 
 ### 问题
 ~~index + bootstrap 的方案 与 eager: true 同时使用会报错~~
 eager 的值所有需要依赖间需要保持一致
+
+### 核心原理
+[基于 Webpack Module Federation，这可能是一个比较优雅的微前端解决方案](https://juejin.cn/post/7020607552190677000)
+[Webpack Module Federation 核心原理](https://zhuanlan.zhihu.com/p/449700396)
+[Webpack Module Federation 核心原理](https://juejin.cn/post/7045211570716016676)
+[Module Federation 没有魔法仅仅是异步chunk](https://zhuanlan.zhihu.com/p/352936804)
