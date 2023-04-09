@@ -16,6 +16,7 @@ class ErrorBound extends PureComponent<IErrorBoundProps> {
   }
 
   static getDerivedStateFromError(error: any) {
+    console.log('getDerivedStateFromError', error)
     return {
       hasError: true,
       error
@@ -33,7 +34,7 @@ class ErrorBound extends PureComponent<IErrorBoundProps> {
       return <>
         {fallbackUI || <ErrorPage />}
         <div>
-          { error }
+          has Error
         </div>
       </>
     }

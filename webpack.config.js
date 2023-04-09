@@ -91,20 +91,19 @@ module.exports = {
       remotes: {
         libA: 'webpackBHost@http://localhost:9100/remoteEntry.js'
       },
-      // 解决方案1
       //shared: ['react'],
-      // 解决方案2
-      // shared: {
-      //   react: {
-      //     singleton: true,
-      //     eager: true,
-      //     // requiredVersion: packageJsonDeps.react,
-      //   },
-      //   'react-dom': {
-      //     singleton: true,
-      //     eager: true,
-      //   }
-      // }
+      shared: {
+        react: {
+          singleton: true,
+          // eager: true,
+          // requiredVersion: packageJsonDeps.react,
+        },
+        'react-dom': {
+          singleton: true,
+          // eager: true,
+          // requiredVersion: packageJsonDeps['react-dom'],
+        }
+      }
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(cwdPath, 'public/index.html')
