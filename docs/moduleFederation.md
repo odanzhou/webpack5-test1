@@ -113,3 +113,4 @@ eager 的值所有需要依赖间需要保持一致
 [Webpack Module Federation 核心原理](https://zhuanlan.zhihu.com/p/449700396)
 [Webpack Module Federation 核心原理](https://juejin.cn/post/7045211570716016676)
 [Module Federation 没有魔法仅仅是异步chunk](https://zhuanlan.zhihu.com/p/352936804)
+[模块联邦浅析](https://cloud.tencent.com/developer/article/2086808)
