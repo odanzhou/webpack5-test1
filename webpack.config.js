@@ -95,13 +95,13 @@ module.exports = {
       shared: {
         react: {
           singleton: true,
-          // eager: true,
-          // requiredVersion: packageJsonDeps.react,
+          eager: true,
+          requiredVersion: packageJsonDeps.react,
         },
         'react-dom': {
           singleton: true,
-          // eager: true,
-          // requiredVersion: packageJsonDeps['react-dom'],
+          eager: true,
+          requiredVersion: packageJsonDeps['react-dom'],
         }
       }
     }),
