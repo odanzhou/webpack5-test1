@@ -19,3 +19,4 @@
 + "declarationMap": false
 ```
 [Fix re-exports RemixRouter type](https://github.com/remix-run/react-router/pull/9468)
+通过删除 node_modules ，又好了（重试大法好）
