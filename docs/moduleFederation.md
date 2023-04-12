@@ -62,7 +62,7 @@ codesandbox 之前做过 webpack dll 的 cdn，我觉得和这个的思路很像
 const React =  awaitimport('libs/react');
 
 ```
-对于某些依赖来说 external （比如 react 和 react-dom）可能更合适，但也有一些自动化的方式可以系统地解决此问题，使用此方案的同时并既然使用老的写法
+对于某些依赖来说 external （比如 react 和 react-dom）可能更合适，但也有一些自动化的方式可以系统地解决此问题，使用此方案的同时并兼容使用老的写法
 
 ### 监听外部模块
 [webpack 监听外部文件变更](https://www.keisei.top/watch-external-files-webpack-plugin/)

@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack serve",
-    "build": "webpack"
+    "build:types": "tsc",
+    "build": "npm run build:types & webpack"
   },
   "keywords": [],
   "author": "",
