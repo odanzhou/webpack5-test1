@@ -59,3 +59,18 @@
   "outDir": "./types"
 }
 ```
+
+### 命名空间和模块
+[TypeScript中namespace和module的区别](https://www.jianshu.com/p/10900659c5d3)
+
+> 那主要在于文件上：TS里的namespace是跨文件的，JS里的module是以文件为单位的，一个文件一个module。
+> TS里的namespace主要是解决命名冲突的问题，会在全局生成一个对象，定义在namespace内部的类都要通过这个对象的属性访问，例如 egret.DisplayObject,egret就是namespace的对象，DisplayObject则是那个类名。因为是注册到全局的，所以跨文件也能正常使用，不同的文件能够读取其他文件注册在全局的命名空间内的信息，也可以注册自己的。namespace其实比较像其他面向对象编程语言里包名的概念
+
+#### 全局扩展
+```typescript
+declare global {
+  interface Array<T> {
+    toObservable(): Observable<T>;
+  }
+}
+```
