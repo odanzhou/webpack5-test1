@@ -116,3 +116,6 @@ eager 的值所有需要依赖间需要保持一致
 [模块联邦浅析](https://cloud.tencent.com/developer/article/2086808)
 [pnpm + module-federation](https://juejin.cn/post/7128213218090024991)
 [一文通透讲解webpack5 module federation](https://juejin.cn/post/7048125682861703181)
+
+### 其他
+[基于 Webpack Module Federation，这可能是一个比较优雅的微前端解决方案](https://zhuanlan.zhihu.com/p/422460780)
